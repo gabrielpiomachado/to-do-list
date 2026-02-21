@@ -1,0 +1,13 @@
+.index {
+  background: #fff;
+  padding: 3rem;
+  margin: 5rem auto;
+  max-width: 50rem;
+  border-radius: 0.4rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+}
+
+.index h1 {
+  font-size: 2rem;
+  text-align: center;
+}
