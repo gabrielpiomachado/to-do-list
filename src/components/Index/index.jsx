@@ -8,11 +8,11 @@ import { FaPlus } from 'react-icons/fa';
 import { FaEdit, FaWindowClose } from 'react-icons/fa';
 
 export default function Index() {
-  const [newTask, setTask] = useState('');
+  const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState([]);
 
   const handleChange = (e) => {
-    setTask(e.target.value);
+    setNewTask(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -22,7 +22,15 @@ export default function Index() {
     if (!trimmedTask) return;
 
     setTasks([...tasks, trimmedTask]);
-    setTask('');
+    setNewTask('');
+  };
+
+  const handleEdit = (e, index) => {
+    console.log('Edit', index);
+  };
+
+  const handleDelete = (e, index) => {
+    setTasks(tasks.filter((_, i) => i !== index));
   };
 
   return (
@@ -37,12 +45,12 @@ export default function Index() {
       </form>
 
       <ul className="tasks">
-        {tasks.map((task) => (
+        {tasks.map((task, index) => (
           <li key={task}>
             {task}
             <span>
-              <FaEdit onClick={handleEdit} className="edit" />
-              <FaWindowClose onClick={handleDelete} className="delete" />
+              <FaEdit onClick={(e) => handleEdit(e, index)} className="edit" />
+              <FaWindowClose onClick={(e) => handleDelete(e, index)} className="delete" />
             </span>
           </li>
         ))}
