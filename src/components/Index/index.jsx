@@ -9,17 +9,27 @@ import { FaEdit, FaWindowClose } from 'react-icons/fa';
 
 export default function Index() {
   const [newTask, setTask] = useState('');
-  const [tasks, setTasks] = useState(['Fazer café', 'Beber agua', 'Estudar']);
+  const [tasks, setTasks] = useState([]);
 
   const handleChange = (e) => {
     setTask(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const trimmedTask = newTask.trim();
+
+    if (!trimmedTask) return;
+
+    setTasks([...tasks, trimmedTask]);
+    setTask('');
   };
 
   return (
     <div className="index">
       <h1>To-do List</h1>
 
-      <form action="#" className="form">
+      <form onSubmit={handleSubmit} action="#" className="form">
         <input onChange={handleChange} type="text" value={newTask} />
         <button type="submit">
           <FaPlus />
@@ -30,10 +40,10 @@ export default function Index() {
         {tasks.map((task) => (
           <li key={task}>
             {task}
-            <div>
-              <FaEdit className="edit" />
-              <FaWindowClose className="delete" />
-            </div>
+            <span>
+              <FaEdit onClick={handleEdit} className="edit" />
+              <FaWindowClose onClick={handleDelete} className="delete" />
+            </span>
           </li>
         ))}
       </ul>
