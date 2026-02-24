@@ -10,6 +10,7 @@ import { FaEdit, FaWindowClose } from 'react-icons/fa';
 export default function Index() {
   const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [editIndex, setEditIndex] = useState(-1);
 
   const handleChange = (e) => {
     setNewTask(e.target.value);
@@ -21,12 +22,19 @@ export default function Index() {
 
     if (!trimmedTask) return;
 
-    setTasks([...tasks, trimmedTask]);
+    if (editIndex === -1) {
+      setTasks([...tasks, trimmedTask]);
+    } else {
+      setTasks(tasks.map((task, i) => (i === editIndex ? trimmedTask : task)));
+      setEditIndex(-1);
+    }
+
     setNewTask('');
   };
 
   const handleEdit = (e, index) => {
-    console.log('Edit', index);
+    setNewTask(tasks[index]);
+    setEditIndex(index);
   };
 
   const handleDelete = (e, index) => {
