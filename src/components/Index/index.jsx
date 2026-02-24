@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './index.css';
 
 // Form
@@ -9,8 +9,15 @@ import { FaEdit, FaWindowClose } from 'react-icons/fa';
 
 export default function Index() {
   const [newTask, setNewTask] = useState('');
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const saved = localStorage.getItem('tasks');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [editIndex, setEditIndex] = useState(-1);
+
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
 
   const handleChange = (e) => {
     setNewTask(e.target.value);
